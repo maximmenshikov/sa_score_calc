@@ -6,6 +6,12 @@ namespace sa_score_calc
 {
 	class MainClass
 	{
+        private static void PrintQuestionStats(List<UtilityAnswer> utilReports, string question)
+        {
+            var whatReports = utilReports.SelectMany((a) => a.Answers.Where((b) => b.Key == question)).Select((c) => c.Value).ToList();
+            Console.WriteLine(question + ": " + (100.0 * ((double)whatReports.Where((a) => a.Text != "-" && a.Text != "").Select((b) => b.InformationalValue).Sum() / (double)whatReports.Count)) + "%");
+        }
+
 		public static void Main (string[] args)
 		{
 			if (args.Length == 0)
@@ -129,6 +135,24 @@ namespace sa_score_calc
 					Console.WriteLine ("0 0");
 				}
 			}
+
+            // Show scores per utility.
+            Console.WriteLine();
+            Console.WriteLine("Per-utility question stats");
+            foreach (var testedUtility in testedUtilities)
+            {
+                var utilReports = reports.SelectMany((a) => a.UtilityAnswers).ToList().Where((a) => a.UtilityName == testedUtility).ToList();
+                Console.WriteLine(testedUtility + ":");
+
+                PrintQuestionStats(utilReports, "What");
+                PrintQuestionStats(utilReports, "When");
+                PrintQuestionStats(utilReports, "Where");
+                PrintQuestionStats(utilReports, "Who");
+                PrintQuestionStats(utilReports, "Why");
+                PrintQuestionStats(utilReports, "How to fix");
+                Console.WriteLine();
+            }
+
 		}
 	}
 }
