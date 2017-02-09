@@ -31,18 +31,18 @@ namespace sa_score_calc
 		/// Gets the answers of utilities
 		/// </summary>
 		/// <value>The utility answers.</value>
-		public List<UtilityAnswer> UtilityAnswers 
+		public List<UtilityAnswer> UtilityAnswers
 		{
 			get
-            {
+			{
 				return _utilityAnswers;
 			}
 		}
-            
-        /// <summary>
-        /// Parses the inner name, error class and supported flat from "report (another report) {notfullsupport}" format.
-        /// </summary>
-        /// <param name="input">Input string</param>
+
+		/// <summary>
+		/// Parses the inner name, error class and supported flat from "report (another report) {notfullsupport}" format.
+		/// </summary>
+		/// <param name="input">Input string</param>
 		public void ParseInnerName(string input)
 		{
 			InnerName = input;
@@ -63,10 +63,10 @@ namespace sa_score_calc
 			}
 		}
 
-        /// <summary>
-        /// Calculate utility-sorted score list.
-        /// </summary>
-        /// <param name="weights">Weight dictionary</param>
+		/// <summary>
+		/// Calculate utility-sorted score list.
+		/// </summary>
+		/// <param name="weights">Weight dictionary</param>
 		public Dictionary<string, double> Calculate(ref Dictionary<string, double> weights)
 		{
 			var dict = new Dictionary<string, List<double>> ();
@@ -78,7 +78,7 @@ namespace sa_score_calc
 				utilScoreList.Add(utilAnswer.Calculate(ref weights));
 			}
 
-            // Find average score per each utility
+			// Find average score per each utility
 			var resultDict = new Dictionary<string, double> ();
 			foreach (var d in dict) {
 				resultDict.Add (d.Key, d.Value.ToList ().Average ());
